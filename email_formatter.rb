@@ -23,8 +23,7 @@ class EmailFormatter
     body_raw = <<BODY
 # Branch
 #{GitInfo.branch_name}
-#{!target_branch_is_master ? "\n# Target branch\n" : ''}
-#{special ? "\n# Deploy instructions\n1. \n" : ''}
+#{conditional_body_text}
 # Commits
 #{GitInfo.commit_log}
 
@@ -38,5 +37,12 @@ BODY
     return body_raw if OS.mac?
 
     URI.escape(body_raw)
+  end
+
+  def conditional_body_text
+    text = ''
+    text << "\n# Target branch\n\n" unless target_branch_is_master
+    text << "\n# Deploy instructions\n1. \n" if special
+    text
   end
 end
