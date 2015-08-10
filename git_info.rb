@@ -43,7 +43,7 @@ module GitInfo
 
       `git log #{merge_base}..HEAD --format='%b' | grep refs`.
         gsub('refs', '').gsub(',', '').gsub('#', '').
-        strip.split(/\s+/).uniq.sort_by { |ref| ref.to_i }
+        strip.split(/\s+/).uniq.sort_by(&:to_i)
     end
   end
 end
