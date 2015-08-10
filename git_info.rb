@@ -41,9 +41,9 @@ module GitInfo
     def issue_refs
       merge_base = `git merge-base HEAD master`.chomp
 
-      `git log #{merge_base}..HEAD --format='%b' | grep refs`.
-        gsub('refs', '').gsub(',', '').gsub('#', '').
-        strip.split(/\s+/).uniq.sort_by(&:to_i)
+      `git log #{merge_base}..HEAD --format='%b' | grep refs`
+        .gsub('refs', '').gsub(',', '').gsub('#', '')
+        .strip.split(/\s+/).uniq.sort_by(&:to_i)
     end
   end
 end
