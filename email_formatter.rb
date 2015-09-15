@@ -1,5 +1,4 @@
 require_relative 'git_info'
-require 'uri'
 
 # Contains the various snippets of text generated for the mail
 class EmailFormatter
@@ -33,10 +32,6 @@ class EmailFormatter
 # Referenced issues
 #{GitInfo.issue_urls}
 BODY
-
-    return body_raw if OS.mac?
-
-    URI.escape(body_raw)
   end
 
   def conditional_body_text

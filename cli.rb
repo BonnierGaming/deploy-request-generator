@@ -2,6 +2,7 @@ require_relative 'settings'
 require_relative 'os'
 require_relative 'git_info'
 require_relative 'email_formatter'
+require_relative 'sanitizer'
 
 # User interface and what opens the mailto link
 class CLI
@@ -76,14 +77,18 @@ class CLI
   end
 
   def open_mailto_link
-    mailto_link = "mailto:#{email.to}?"\
-      "subject=#{email.subject}"\
-      "&body=#{email.body}"
+    mailto_link = "mailto:#{escape(email.to)}?"\
+      "subject=#{escape(email.subject)}"\
+      "&body=#{escape(email.body)}"
 
     `#{command} "#{mailto_link}"`
   end
 
   private
+
+  def escape(text)
+    Sanitizer.escape(text)
+  end
 
   def special?
     yes_no_prompt(
